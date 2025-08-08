@@ -39,7 +39,5 @@ out/
 src/main/resources/application-dev.properties
 .env
 .vscode/
-*.yml
-*.yaml
 .DS_Store
 *.p8
