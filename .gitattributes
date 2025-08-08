@@ -1,0 +1,15 @@
+# 기존 내용
+./gradlew text eol=lf
+*.bat text eol=crlf
+*.jar binary
+
+# 추가할 내용
+* text=auto eol=lf
+*.java text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
