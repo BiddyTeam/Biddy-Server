@@ -37,5 +37,9 @@ out/
 ### VS Code ###
 .vscode/
 src/main/resources/application-dev.yml
-
 .env
+.vscode/
+*.yml
+*.yaml
+.DS_Store
+*.p8
