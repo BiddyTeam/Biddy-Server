@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 
     private String nickname;
 
-    private String kakaoId;
+    private Long kakaoId;
 
     private String refreshToken;
 
