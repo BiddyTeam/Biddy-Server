@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.auth.entity;
+package com.biddy.biddy_api.domain.auth.client;
 
 import com.biddy.biddy_api.domain.auth.properties.KakaoProperties;
 import com.fasterxml.jackson.databind.JsonNode;
