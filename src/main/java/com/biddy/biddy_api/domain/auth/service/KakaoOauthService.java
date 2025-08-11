@@ -1,6 +1,8 @@
 package com.biddy.biddy_api.domain.auth.service;
 
 import com.biddy.biddy_api.domain.auth.client.KakaoClient;
+import com.biddy.biddy_api.domain.auth.converter.AuthConverter;
+import com.biddy.biddy_api.domain.auth.dto.KakaoLoginDTO;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.domain.user.repository.UserRepository;
 import com.biddy.biddy_api.global.jwt.domain.JwtTokenProvider;
@@ -16,12 +18,15 @@ import java.util.Optional;
 public class KakaoOauthService {
 
     private final KakaoClient kakaoClient;
-    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final UserRepository userRepository;
+
+    private final AuthConverter authConverter;
 
     private static final long EXPIRED = 3 * 24 * 60 * 60 * 1000L;
 
-    public KakaoLoginResponseDTO signup(String code) {
+    public KakaoLoginDTO.Response signup(String code) {
         String kakaoAccessToken = kakaoClient.getAccessToken(code);
         KakaoClient.KakaoClientInfo info = kakaoClient.getClientInfo(kakaoAccessToken);
 
@@ -40,6 +45,6 @@ public class KakaoOauthService {
 
         user.setRefreshToken(refreshToken);
 
-        return new KakaoLoginResponseDTO(accessToken, refreshToken, user.getId(), user.getNickname(), isNewUser);
+        return authConverter.toKakaoLoginResponse(accessToken, refreshToken, user.getId(), user.getNickname(), isNewUser);
     }
 }
