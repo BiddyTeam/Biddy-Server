@@ -1,10 +1,7 @@
-# 기존 내용
-./gradlew text eol=lf
-*.bat text eol=crlf
-*.jar binary
-
-# 추가할 내용
+# 기본 설정 - 모든 텍스트 파일을 LF로 통일
 * text=auto eol=lf
+
+# Java 파일들
 *.java text eol=lf
 *.gradle text eol=lf
 *.properties text eol=lf
@@ -13,3 +10,17 @@
 *.md text eol=lf
 *.json text eol=lf
 *.xml text eol=lf
+
+# Windows 배치 파일은 CRLF 유지
+*.bat text eol=crlf
+
+# 바이너리 파일
+*.jar binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+
+# Gradle wrapper
+gradlew text eol=lf

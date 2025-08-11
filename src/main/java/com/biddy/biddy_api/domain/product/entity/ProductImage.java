@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.user.entity;
+package com.biddy.biddy_api.domain.product.entity;
 
 import com.biddy.biddy_api.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -12,16 +12,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_addresses")
-public class UserAddress extends BaseEntity {
+@Table(name = "product_images")
+public class ProductImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    private String address;
+    @Column(nullable = false)
+    private String imageUrl;
 }

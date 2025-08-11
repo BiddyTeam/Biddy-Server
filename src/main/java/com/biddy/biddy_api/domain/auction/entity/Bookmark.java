@@ -1,5 +1,6 @@
-package com.biddy.biddy_api.domain.user.entity;
+package com.biddy.biddy_api.domain.auction.entity;
 
+import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_addresses")
-public class UserAddress extends BaseEntity {
+@Table(name = "bookmarks")
+public class Bookmark extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +24,7 @@ public class UserAddress extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id", nullable = false)
+    private Auction auction;
 }
