@@ -41,6 +41,10 @@ public class JwtTokenProvider {
         return createToken(userId, nickname, jwtProperties.getRefreshTokenValidity());
     }
 
+    public String createDevToken(Long memberId, String nickname) {
+        return createToken(memberId, nickname, 1209600000L * 2);
+    }
+
     private String createToken(Long userId, String nickname, long validity) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userId));
 

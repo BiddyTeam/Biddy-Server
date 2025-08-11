@@ -47,4 +47,20 @@ public class KakaoOauthService {
 
         return authConverter.toKakaoLoginResponse(accessToken, refreshToken, user.getId(), user.getNickname(), isNewUser);
     }
+
+    public KakaoLoginDTO.Response createDevToken() {
+        User user = userRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException());
+
+        // accessToken: 2주 만료
+        String accessToken = jwtTokenProvider.createDevToken(user.getId(), user.getNickname());
+
+        // refreshToken: 기본 만료
+        String refreshToken = jwtTokenProvider.createRefreshToken(user.getId(), user.getNickname());
+
+        // refreshToken DB에 저장
+        user.setRefreshToken(refreshToken);
+
+        return authConverter.toKakaoLoginResponse(accessToken, refreshToken, user.getId(), user.getNickname(), false);
+    }
 }

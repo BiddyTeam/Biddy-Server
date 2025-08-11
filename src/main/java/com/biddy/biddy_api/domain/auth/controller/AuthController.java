@@ -53,7 +53,7 @@ public class AuthController {
                 .body(body);
     }
 
-    @PostMapping("/auth/dev-token")
+    @PostMapping("/dev-token")
     @Operation(summary = "개발자용 토큰 발급", description = "특정 사용자로 accessToken, refreshToken을 발급합니다.")
     public ResponseEntity<KakaoLoginDTO.Response> createDevToken() {
 
