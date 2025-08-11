@@ -2,6 +2,7 @@ package com.biddy.biddy_api.domain.auth.service;
 
 import com.biddy.biddy_api.domain.auth.client.KakaoClient;
 import com.biddy.biddy_api.domain.user.entity.User;
+import com.biddy.biddy_api.domain.user.repository.UserRepository;
 import com.biddy.biddy_api.global.jwt.domain.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,8 @@ public class KakaoOauthService {
         String accessToken = jwtTokenProvider.createAccessToken(user.getId(), user.getNickname());
         String refreshToken = jwtTokenProvider.createRefreshToken(user.getId(), user.getNickname());
 
-        // 5. refresh는 db에 저장
         user.setRefreshToken(refreshToken);
 
-        // jwt개발할 때 넣기
-        return new KakaoLoginResponseDTO(accessToken, refreshToken, user.getId(), user.getNickname(), newuser);
+        return new KakaoLoginResponseDTO(accessToken, refreshToken, user.getId(), user.getNickname(), isNewUser);
     }
 }

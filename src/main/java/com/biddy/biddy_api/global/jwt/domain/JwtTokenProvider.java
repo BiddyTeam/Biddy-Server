@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.global.jwt.domain;
 
 import com.biddy.biddy_api.domain.user.entity.User;
+import com.biddy.biddy_api.domain.user.repository.UserRepository;
 import com.biddy.biddy_api.global.jwt.properties.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -114,7 +115,7 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         Long userId = getUserId(token);
         User user = userRepository.findById(userId)
-                .orElseThrow(new RuntimeException());
+                .orElseThrow(() -> new RuntimeException());
 
         UserDetails userDetails = new CustomUserDetails(user.getId(), user.getNickname());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
