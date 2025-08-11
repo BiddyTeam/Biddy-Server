@@ -28,7 +28,7 @@ public class BidController {
         return new RspTemplate<>(HttpStatus.CREATED, "입찰이 등록 되었습니다.", id);
     }
 
-    @GetMapping("/auction/bids")
+    @GetMapping("/auction")
     @Operation(method = "Get", description = "각 경매에 해당되는 입찰 이력을 조회합니다.")
     public RspTemplate<List<BidDto>> getBidListInAuction(
             @RequestParam Long auctionId
@@ -37,7 +37,7 @@ public class BidController {
         return new RspTemplate<>(HttpStatus.FOUND, "경매에 해당되는 입찰 이력을 조회합니다.", list);
     }
 
-    @GetMapping("/history")
+    @GetMapping("/auction/bids")
     @Operation(method = "Get", description = "사용자가 입찰했던 이력을 조회합니다.")
     public RspTemplate<List<BidDto>> getBidHistory(
             @RequestParam Long userId
