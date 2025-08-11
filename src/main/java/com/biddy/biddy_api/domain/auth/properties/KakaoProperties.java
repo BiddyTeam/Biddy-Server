@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.global.oauth2.properties;
+package com.biddy.biddy_api.domain.auth.properties;
 
 import lombok.Getter;
 import lombok.Setter;

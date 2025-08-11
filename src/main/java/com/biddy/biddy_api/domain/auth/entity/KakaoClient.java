@@ -1,7 +1,6 @@
-package com.biddy.biddy_api.global.oauth2.domain;
+package com.biddy.biddy_api.domain.auth.entity;
 
-import com.biddy.biddy_api.global.oauth2.domain.info.KakaoClientInfo;
-import com.biddy.biddy_api.global.oauth2.properties.KakaoProperties;
+import com.biddy.biddy_api.domain.auth.properties.KakaoProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,5 +56,11 @@ public class KakaoClient {
         String nickname = response.path("properties").path("nickname").asText();
 
         return new KakaoClientInfo(kakaoId, nickname);
+    }
+
+    private record KakaoClientInfo(
+            Long kakaoId,
+            String nickname
+    ) {
     }
 }
