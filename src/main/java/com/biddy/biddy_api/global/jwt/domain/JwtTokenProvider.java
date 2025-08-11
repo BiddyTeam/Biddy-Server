@@ -3,6 +3,7 @@ package com.biddy.biddy_api.global.jwt.domain;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.domain.user.repository.UserRepository;
 import com.biddy.biddy_api.global.jwt.properties.JwtProperties;
+import com.biddy.biddy_api.global.security.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
