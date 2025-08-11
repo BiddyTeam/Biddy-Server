@@ -26,15 +26,39 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. gradlew 실행 권한 추가
+      # 3. 운영용 설정 파일 생성 (GitHub Secrets 사용)
+      - name: Create application-prod.properties
+        run: |
+          cat > src/main/resources/application-prod.properties << EOF
+          # 운영 데이터베이스
+          spring.datasource.url=${{ secrets.DB_URL }}
+          
+          # JWT 설정
+          jwt.secret=${{ secrets.JWT_SECRET }}
+          jwt.access-token-validity=3600000
+          jwt.refresh-token-validity=1209600000
+          
+          # 카카오 OAuth
+          kakao.client-id=${{ secrets.KAKAO_CLIENT_ID }}
+          kakao.client-secret=${{ secrets.KAKAO_CLIENT_SECRET }}
+          kakao.redirect-uri=${{ secrets.KAKAO_REDIRECT_URI }}
+          kakao.token-uri=https://kauth.kakao.com/oauth/token
+          kakao.user-info=https://kapi.kakao.com/v2/user/me
+          
+          # 운영 모드 설정
+          spring.jpa.show-sql=false
+          logging.level.org.hibernate.SQL=WARN
+          EOF
+
+      # 4. gradlew 실행 권한 추가
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 4. Gradle로 빌드 (테스트는 생략)
+      # 5. Gradle로 빌드 (테스트는 생략)
       - name: Build with Gradle
         run: ./gradlew clean build -x test
 
-      # 5. 빌드된 JAR 파일을 EC2로 전송 (SCP)
+      # 6. 빌드된 JAR 파일을 EC2로 전송 (SCP)
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
@@ -44,13 +68,29 @@ jobs:
           source: "build/libs/*.jar"
           target: "/home/ubuntu/Biddy-Server/build/libs"
 
-      # 6. EC2에 접속하여 배포 스크립트 실행 (SSH)
-      - name: Execute deployment script
-        uses: appleboy/ssh-action@master
+      # 7. EC2에 접속하여 배포 스크립트 실행 (SSH)
+      - name: Deploy Application
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu
-            ./deploy.sh
+            cd /home/ubuntu/biddy-server
+            
+            # 기존 프로세스 종료
+            PID=$(pgrep -f "biddy-api.*jar")
+            if [ -n "$PID" ]; then
+              echo "Stopping existing application (PID: $PID)"
+              kill -9 $PID
+              sleep 3
+            fi
+            
+            # 애플리케이션 시작 (prod 프로필 사용)
+            echo "Starting application with prod profile..."
+            nohup java -jar \
+              -Dspring.profiles.active=prod \
+              -Xms512m -Xmx1024m \
+              build/libs/biddy-api-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+            
+            echo $! > app.pid
