@@ -1,0 +1,7 @@
+package com.biddy.biddy_api.global.oauth2.domain.info;
+
+public record KakaoClientInfo(
+        Long kakaoId,
+        String nickname
+) {
+}
