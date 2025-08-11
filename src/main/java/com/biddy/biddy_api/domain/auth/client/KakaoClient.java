@@ -58,7 +58,7 @@ public class KakaoClient {
         return new KakaoClientInfo(kakaoId, nickname);
     }
 
-    private record KakaoClientInfo(
+    public record KakaoClientInfo(
             Long kakaoId,
             String nickname
     ) {
