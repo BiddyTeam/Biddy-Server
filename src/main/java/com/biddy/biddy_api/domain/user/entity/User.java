@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 
     private String nickname;
 
-    private String kakaoId;
+    private Long kakaoId;
 
     private String refreshToken;
 
@@ -44,4 +44,8 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks;
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }
