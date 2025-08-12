@@ -117,6 +117,7 @@ public class Auction extends BaseEntity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         dto.setStartTime(this.startTime.format(formatter));
         dto.setEndTime(this.endTime.format(formatter));
+        dto.setAuctionType(this.auctionType);
 
         dto.setAuctionStatus(this.status);
         dto.setProductCategory(this.category);

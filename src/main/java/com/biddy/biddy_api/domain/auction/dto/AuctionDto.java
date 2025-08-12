@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.domain.auction.dto;
 
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
+import com.biddy.biddy_api.domain.auction.enums.AuctionType;
 import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
 import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import lombok.Data;
@@ -19,7 +20,10 @@ public class AuctionDto {
     public String bidIncrement;
     public String startTime;
     public String endTime;
+
+    public AuctionType auctionType;
     public AuctionStatus auctionStatus;
+
     public ProductCategory productCategory;
     public ProductCondition productCondition;
 
