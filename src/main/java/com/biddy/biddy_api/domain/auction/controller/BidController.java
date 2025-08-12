@@ -45,4 +45,13 @@ public class BidController {
         List<BidDto> list = bidService.getBidHistory(userId);
         return new RspTemplate<>(HttpStatus.FOUND, "입찰 이력을 조회합니다.", list);
     }
+
+    @PostMapping("/immediately-purchase/{auctionId}")
+    @Operation(method = "Post", description = "즉시 구매합니다.")
+    public RspTemplate<Boolean> postImmediatelyPurchase(
+            @PathVariable Long auctionId
+    ) {
+        bidService.postImmediatelyPurchase(auctionId);
+        return new RspTemplate<>(HttpStatus.OK, "즉시 구매 완료", true);
+    }
 }
