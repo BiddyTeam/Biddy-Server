@@ -1,7 +1,7 @@
 package com.biddy.biddy_api.domain.auction.entity;
 
-import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto.AuctionCreateRequest;
+import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
 import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
 import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
@@ -12,6 +12,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -91,5 +92,38 @@ public class Auction extends BaseEntity {
                 .condition(request.getCondition() != null ?
                         ProductCondition.valueOf(request.getCondition().toUpperCase()) : null)
                 .build();
+    }
+
+    public AuctionDto toDto(Long userId) {
+        AuctionDto dto = new AuctionDto();
+        dto.setSellerId(this.seller.getId());
+        dto.setTitle(this.title);
+        dto.setDescription(this.description);
+        dto.setStartPrice(this.startPrice.toString());
+        dto.setBuyNowPrice(this.buyNowPrice != null ? this.buyNowPrice.toString() : null);
+        dto.setCurrentPrice(this.currentPrice.toString());
+        dto.setBidIncrement(this.bidIncrement != null ? this.bidIncrement.toString() : null);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        dto.setStartTime(this.startTime.format(formatter));
+        dto.setEndTime(this.endTime.format(formatter));
+
+        dto.setAuctionStatus(this.status);
+        dto.setProductCategory(this.category);
+        dto.setProductCondition(this.condition);
+
+        // Bid 리스트를 BidDto 리스트로 변환 (Bid 클래스에 toDto() 메서드가 있다고 가정)
+        if (this.bids != null) {
+            // dto.setBidDtoList(this.bids.stream().map(Bid::toDto).collect(Collectors.toList()));
+        }
+
+        // 현재 사용자가 북마크했는지 여부 확인
+        if (this.bookmarks != null && userId != null) {
+            dto.setIsBookmarks(this.bookmarks.stream().anyMatch(b -> b.getUser().getId().equals(userId)));
+        } else {
+            dto.setIsBookmarks(false);
+        }
+
+        return dto;
     }
 }
