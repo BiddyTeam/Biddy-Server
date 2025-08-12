@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -261,6 +262,11 @@ public class AiService {
                 return null;
             }
 
+            int startPrice = selectedAuctionNode.path("startPrice").asInt(0);
+            int buyNowPrice = selectedAuctionNode.path("buyNowPrice").asInt(0);
+            BigDecimal startPriceBD = new BigDecimal(startPrice);
+            BigDecimal minIncrement = getMinBidIncrement(startPriceBD);
+
             // 선택된 경매 정보 파싱
             SmartPricingDto.SelectedAuction selectedAuction = SmartPricingDto.SelectedAuction.builder()
                     .type(selectedAuctionNode.path("type").asText(""))
@@ -285,6 +291,7 @@ public class AiService {
             return SmartPricingDto.PriceResponse.builder()
                     .marketPrice(marketPrice)
                     .selectedAuction(selectedAuction)
+                    .minBidIncrement(minIncrement)
                     .analysis(analysis)
                     .build();
 
@@ -304,5 +311,31 @@ public class AiService {
 
         log.warn("AI 응답에서 JSON을 찾을 수 없음: {}", response);
         return null;
+    }
+
+    private static BigDecimal getMinBidIncrement(BigDecimal currentPrice) {
+        if (currentPrice == null) {
+            return new BigDecimal("200");
+        }
+
+        long price = currentPrice.longValue();
+
+        if (price < 5000) {
+            return new BigDecimal("200");
+        } else if (price < 20000) {
+            return new BigDecimal("500");
+        } else if (price < 50000) {
+            return new BigDecimal("1000");
+        } else if (price < 200000) {
+            return new BigDecimal("2000");
+        } else if (price < 500000) {
+            return new BigDecimal("5000");
+        } else if (price < 1000000) {
+            return new BigDecimal("10000");
+        } else if (price < 3000000) {
+            return new BigDecimal("20000");
+        } else {
+            return new BigDecimal("50000");
+        }
     }
 }

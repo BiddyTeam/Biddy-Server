@@ -5,6 +5,8 @@ import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 public class SmartPricingDto {
 
     @Data
@@ -20,6 +22,7 @@ public class SmartPricingDto {
     public static class PriceResponse {
         private Integer marketPrice;                    // 시장 참고가
         private SelectedAuction selectedAuction;       // 선택된 경매 타입 정보
+        private BigDecimal minBidIncrement;                // 호가 단위 정보
         private Analysis analysis;                      // 분석 정보
     }
 
