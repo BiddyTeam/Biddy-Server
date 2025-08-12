@@ -47,4 +47,13 @@ public class AuctionController {
         List<AuctionListDto> auctions = auctionQueryService.getAllAuctions();
         return new RspTemplate<>(HttpStatus.OK, "경매 목록을 조회했습니다.", auctions);
     }
+
+    @GetMapping("/search/{keyword}")
+    @Operation(summary = "경매 목록 검색", description = "특정 키워드가 포함된 상품명을 가진 경매 목록을 조회합니다.")
+    public RspTemplate<List<AuctionListDto>> searchAuctions(
+            @PathVariable String keyword
+    ) {
+        List<AuctionListDto> auctions = auctionQueryService.searchAuctions(keyword);
+        return new RspTemplate<>(HttpStatus.OK, "경매 목록을 조회했습니다.", auctions);
+    }
 }
