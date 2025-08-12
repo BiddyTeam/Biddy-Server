@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.user.controller;
 
+import com.biddy.biddy_api.domain.user.service.UserQueryService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
