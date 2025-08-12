@@ -8,10 +8,7 @@ import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.global.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -45,6 +42,7 @@ public class Auction extends BaseEntity {
     @Column(precision = 15, scale = 2)
     private BigDecimal buyNowPrice; // 즉시구매가
 
+    @Setter
     @Column(precision = 15, scale = 2)
     @Builder.Default
     private BigDecimal currentPrice = BigDecimal.ZERO;
