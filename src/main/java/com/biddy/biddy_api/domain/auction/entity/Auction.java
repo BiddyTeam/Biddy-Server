@@ -3,6 +3,7 @@ package com.biddy.biddy_api.domain.auction.entity;
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto.AuctionCreateRequest;
 import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
+import com.biddy.biddy_api.domain.auction.enums.AuctionType;
 import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
 import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.biddy.biddy_api.domain.user.entity.User;
@@ -70,6 +71,10 @@ public class Auction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductCondition condition;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AuctionType auctionType;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
@@ -79,7 +84,8 @@ public class Auction extends BaseEntity {
     @OneToMany(mappedBy = "auction")
     private List<AuctionImage> auctionImages;
 
-    public static Auction create(User seller, AuctionCreateRequest request, ProductCategory category) {
+    public static Auction create(User seller, AuctionCreateRequest request, ProductCategory category,
+                                 LocalDateTime startTime, LocalDateTime endTime) {
         return Auction.builder()
                 .seller(seller)
                 .title(request.getTitle())
@@ -88,13 +94,13 @@ public class Auction extends BaseEntity {
                 .buyNowPrice(request.getBuyNowPrice())
                 .currentPrice(request.getStartPrice())
                 .bidIncrement(request.getBidIncrement() != null ? request.getBidIncrement() : new BigDecimal("1000"))
-                .startTime(request.getStartTime())
-                .endTime(request.getEndTime())
-                .status(request.getStartTime().isAfter(LocalDateTime.now()) ?
-                        AuctionStatus.SCHEDULED : AuctionStatus.ACTIVE)
+                .startTime(startTime)
+                .endTime(endTime)
+                .status(AuctionStatus.ACTIVE) // 즉시 시작하므로 ACTIVE
                 .category(category)
                 .condition(request.getCondition() != null ?
                         ProductCondition.valueOf(request.getCondition().toUpperCase()) : null)
+                .auctionType(request.getAuctionType())
                 .build();
     }
 
@@ -116,12 +122,6 @@ public class Auction extends BaseEntity {
         dto.setProductCategory(this.category);
         dto.setProductCondition(this.condition);
 
-        // Bid 리스트를 BidDto 리스트로 변환 (Bid 클래스에 toDto() 메서드가 있다고 가정)
-        if (this.bids != null) {
-            // dto.setBidDtoList(this.bids.stream().map(Bid::toDto).collect(Collectors.toList()));
-        }
-
-        // 현재 사용자가 북마크했는지 여부 확인
         if (this.bookmarks != null && userId != null) {
             dto.setIsBookmarks(this.bookmarks.stream().anyMatch(b -> b.getUser().getId().equals(userId)));
         } else {

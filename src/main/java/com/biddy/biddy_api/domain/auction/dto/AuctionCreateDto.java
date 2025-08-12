@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.auction.dto;
 
+import com.biddy.biddy_api.domain.auction.enums.AuctionType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,17 +32,16 @@ public class AuctionCreateDto {
         @Positive(message = "입찰 단위는 0보다 커야 합니다")
         private BigDecimal bidIncrement;
 
-        @NotNull(message = "시작 시간은 필수입니다")
-        private LocalDateTime startTime;
-
-        @NotNull(message = "종료 시간은 필수입니다")
-        private LocalDateTime endTime;
-
         @NotBlank(message = "카테고리는 필수입니다")
         private String category;
 
         private String condition;
 
         private List<String> imageUrls;
+
+        @NotNull(message = "경매 유형은 필수입니다")
+        private AuctionType auctionType;
+
+        private List<String> keywords;
     }
 }
