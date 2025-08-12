@@ -16,7 +16,7 @@ public class AuctionCreateDto {
     @Data
     @Builder
     @Schema(name = "AuctionCreateRequest", description = "경매 등록 요청")
-    public class AuctionCreateRequest {
+    public static class AuctionCreateRequest {
         @NotBlank(message = "제목은 필수입니다")
         private String title;
 
