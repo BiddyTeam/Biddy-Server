@@ -29,4 +29,13 @@ public class UserController {
         MyPageProfileDto.MyPageProfileResponse profile = userQueryService.getMyProfile(userId);
         return new RspTemplate<>(HttpStatus.OK, "프로필 정보를 조회했습니다.", profile);
     }
+
+    @GetMapping("/participated-auctions")
+    @Operation(summary = "참여한 경매 목록",
+            description = "내가 입찰한 경매들의 목록과 현재 상태를 조회합니다.")
+    public RspTemplate<List<MyParticipatedAuctionDto.MyParticipatedAuctionResponse>> getParticipatedAuctions() {
+        Long userId = 1L;
+        List<MyParticipatedAuctionDto.MyParticipatedAuctionResponse> auctions = userQueryService.getMyParticipatedAuctions(userId);
+        return new RspTemplate<>(HttpStatus.OK, "참여한 경매 목록을 조회했습니다.", auctions);
+    }
 }
