@@ -31,7 +31,7 @@ public class AuctionController {
         return new RspTemplate<>(HttpStatus.CREATED, "경매가 등록되었습니다.", auctionId);
     }
 
-    @GetMapping("member/{memberId}/auction/{auctionId}")
+    @GetMapping("/{auctionId}/member/{memberId}")
     @Operation(summary = "경매 상세 조회", description = "경매 상세 정보를 조회합니다.")
     public RspTemplate<AuctionDto> getAuction(
             @PathVariable Long memberId,
