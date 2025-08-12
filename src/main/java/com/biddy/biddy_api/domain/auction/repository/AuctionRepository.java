@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +22,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
     @Modifying
     @Query("UPDATE Auction a SET a.status = 'ENDED' WHERE a.endTime <= :now AND a.status = 'ACTIVE'")
     int endExpiredAuctions(@Param("now") LocalDateTime now);
+
+    @Query("SELECT a.id FROM Auction a WHERE a.endTime <= :now AND a.status = 'ACTIVE'")
+    List<Long> findIdsOfActiveAuctionsEndedBefore(@Param("now") LocalDateTime now);
 }
