@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.auction.dto;
 
+import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class AuctionDto {
 
@@ -38,5 +40,12 @@ public class AuctionDto {
 
         @NotNull(message = "종료 시간은 필수입니다")
         private LocalDateTime endTime;
+
+        @NotBlank(message = "카테고리는 필수입니다")
+        private String category;
+
+        private String condition;
+
+        private List<String> imageUrls;
     }
 }
