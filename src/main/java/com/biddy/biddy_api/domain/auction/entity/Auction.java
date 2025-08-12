@@ -58,6 +58,7 @@ public class Auction extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private AuctionStatus status = AuctionStatus.SCHEDULED;
