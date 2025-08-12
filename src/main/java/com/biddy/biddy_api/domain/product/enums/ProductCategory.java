@@ -21,4 +21,19 @@ public enum ProductCategory {
     public String getDescription() {
         return description;
     }
+
+    public static ProductCategory fromString(String categoryName) {
+        for (ProductCategory category : ProductCategory.values()) {
+            if (category.name().equalsIgnoreCase(categoryName) ||
+                    category.getDescription().equals(categoryName)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("해당 카테고리를 찾을 수 없습니다: " + categoryName);
+    }
+
+    // 모든 카테고리 목록 반환
+    public static ProductCategory[] getAllCategories() {
+        return ProductCategory.values();
+    }
 }

@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.product.entity;
 
+import com.biddy.biddy_api.domain.product.enums.ProductCategory;
 import com.biddy.biddy_api.domain.product.enums.ProductCondition;
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.global.common.BaseEntity;
@@ -29,9 +30,9 @@ public class Product extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductCategory category;
 
     @Enumerated(EnumType.STRING)
     private ProductCondition condition;
