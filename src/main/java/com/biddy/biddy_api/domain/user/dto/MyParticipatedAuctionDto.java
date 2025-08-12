@@ -10,7 +10,7 @@ public class MyParticipatedAuctionDto {
 
     @Data
     @Builder
-    public class MyParticipatedAuctionResponse {
+    public static class MyParticipatedAuctionResponse {
         private Long auctionId;
         private String title;
         private String thumbnailImage;
@@ -19,6 +19,5 @@ public class MyParticipatedAuctionDto {
         private String status; // 마감, 입찰중, 낙찰 등
         private LocalDateTime endTime;
         private Boolean isWinning; // 현재 내가 최고가인지
-        private String badgeColor; // 입찰중, 선두, 마감 등에 따른 뱃지 색상
     }
 }
