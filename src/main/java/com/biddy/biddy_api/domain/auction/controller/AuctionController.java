@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.domain.auction.controller;
 
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
+import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
 import com.biddy.biddy_api.domain.auction.dto.AuctionListDto;
 import com.biddy.biddy_api.domain.auction.service.AuctionCommandService;
 import com.biddy.biddy_api.domain.auction.service.AuctionQueryService;
@@ -30,6 +31,16 @@ public class AuctionController {
         return new RspTemplate<>(HttpStatus.CREATED, "경매가 등록되었습니다.", auctionId);
     }
 
+    @GetMapping("member/{memberId}/auction/{auctionId}")
+    @Operation(summary = "경매 상세 조회", description = "경매 상세 정보를 조회합니다.")
+    public RspTemplate<AuctionDto> getAuction(
+            @PathVariable Long memberId,
+            @PathVariable Long auctionId
+    ) {
+        AuctionDto auction = auctionQueryService.getAuction(memberId, auctionId);
+        return new RspTemplate<>(HttpStatus.FOUND, "경매 상세 정보 조회", auction);
+    }
+  
     @GetMapping
     @Operation(summary = "경매 목록 조회", description = "모든 경매 목록을 조회합니다.")
     public RspTemplate<List<AuctionListDto>> getAllAuctions() {

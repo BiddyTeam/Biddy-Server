@@ -1,5 +1,29 @@
 package com.biddy.biddy_api.domain.auction.dto;
 
-public class AuctionDto {
+import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
+import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
+import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
+import lombok.Data;
 
+import java.util.List;
+
+@Data
+public class AuctionDto {
+    public Long sellerId;
+
+    public String title;
+    public String description;
+    public String startPrice;
+    public String buyNowPrice;
+    public String currentPrice;
+    public String bidIncrement;
+    public String startTime;
+    public String endTime;
+    public AuctionStatus auctionStatus;
+    public ProductCategory productCategory;
+    public ProductCondition productCondition;
+
+    public List<BidDto> bidDtoList;
+
+    public Boolean isBookmarks;
 }
