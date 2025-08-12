@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.product.enums;
+package com.biddy.biddy_api.domain.auction.enums;
 
 public enum ProductCategory {
     ELECTRONICS("전자기기"),

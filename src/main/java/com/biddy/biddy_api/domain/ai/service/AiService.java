@@ -2,7 +2,7 @@ package com.biddy.biddy_api.domain.ai.service;
 
 import com.biddy.biddy_api.domain.ai.dto.AutoWriteDto;
 import com.biddy.biddy_api.domain.auction.enums.AuctionType;
-import com.biddy.biddy_api.domain.product.enums.ProductCondition;
+import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

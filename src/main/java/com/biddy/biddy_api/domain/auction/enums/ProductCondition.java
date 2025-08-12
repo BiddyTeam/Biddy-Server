@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.product.enums;
+package com.biddy.biddy_api.domain.auction.enums;
 
 public enum ProductCondition {
     NEW("새상품"),

@@ -1,7 +1,8 @@
 package com.biddy.biddy_api.domain.auction.entity;
 
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
-import com.biddy.biddy_api.domain.product.entity.Product;
+import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
+import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -56,13 +57,16 @@ public class Auction extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private AuctionStatus status = AuctionStatus.SCHEDULED;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductCategory category;
+
+    @Enumerated(EnumType.STRING)
+    private ProductCondition condition;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<Bid> bids;

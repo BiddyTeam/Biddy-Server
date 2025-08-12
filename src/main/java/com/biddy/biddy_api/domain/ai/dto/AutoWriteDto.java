@@ -1,7 +1,7 @@
 package com.biddy.biddy_api.domain.ai.dto;
 
 import com.biddy.biddy_api.domain.auction.enums.AuctionType;
-import com.biddy.biddy_api.domain.product.enums.ProductCondition;
+import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import lombok.Builder;
 import lombok.Data;
 
