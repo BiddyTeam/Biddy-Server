@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.auction;
+package com.biddy.biddy_api.domain.auction.service;
 
 import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
 import com.biddy.biddy_api.domain.auction.dto.BidDto;
@@ -6,6 +6,8 @@ import com.biddy.biddy_api.domain.auction.dto.PostBidRequest;
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.domain.auction.entity.Bid;
 import com.biddy.biddy_api.domain.auction.enums.BidStatus;
+import com.biddy.biddy_api.domain.auction.repository.AuctionRepository;
+import com.biddy.biddy_api.domain.auction.repository.BidRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

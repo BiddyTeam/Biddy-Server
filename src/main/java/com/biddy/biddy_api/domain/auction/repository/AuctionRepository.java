@@ -1,4 +1,4 @@
-package com.biddy.biddy_api.domain.auction;
+package com.biddy.biddy_api.domain.auction.repository;
 
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import org.springframework.data.jpa.repository.JpaRepository;
