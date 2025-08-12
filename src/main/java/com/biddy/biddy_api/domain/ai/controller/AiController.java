@@ -28,7 +28,7 @@ public class AiController {
             summary = "이미지 기반 자동 글쓰기",
             description = "업로드된 이미지들을 분석하여 상품 제목과 설명을 자동으로 생성합니다."
     )
-    public ResponseEntity<RspTemplate<AutoWriteDto.Response>> autoWrite(
+    public ResponseEntity<RspTemplate<AutoWriteDto.AutoWriteResponse>> autoWrite(
             @RequestParam("images") List<MultipartFile> images) {
 
         if (images == null || images.isEmpty()) {
@@ -36,7 +36,7 @@ public class AiController {
                     .body(new RspTemplate<>(HttpStatus.BAD_REQUEST, "이미지가 필요합니다."));
         }
 
-        AutoWriteDto.Response response = aiService.generateAutoContent(images);
+        AutoWriteDto.AutoWriteResponse response = aiService.generateAutoContent(images);
 
         if (response == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

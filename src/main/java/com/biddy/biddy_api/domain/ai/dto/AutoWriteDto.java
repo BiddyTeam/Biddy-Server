@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.ai.dto;
 
+import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,12 +8,12 @@ import java.util.List;
 
 public class AutoWriteDto {
 
-
     @Data
     @Builder
-    public static class Response {
-        private String title;                // AI가 생성한 상품 제목
-        private String description;          // AI가 생성한 상품 설명
-        private List<String> keyFeatures;   // 상품 주요 특징들
+    public static class AutoWriteResponse {
+        private String title;
+        private String description;
+        private List<String> keyFeatures;
+        private ProductCategory detectedCategory;
     }
 }
