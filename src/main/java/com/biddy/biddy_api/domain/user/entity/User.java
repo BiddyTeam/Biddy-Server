@@ -27,6 +27,7 @@ public class User extends BaseEntity {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
     private Grade grade;
 
     private String nickname;
