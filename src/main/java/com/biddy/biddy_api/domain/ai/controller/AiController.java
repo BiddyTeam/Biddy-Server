@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.domain.ai.controller;
 
 import com.biddy.biddy_api.domain.ai.dto.AutoWriteDto;
+import com.biddy.biddy_api.domain.ai.dto.SmartPricingDto;
 import com.biddy.biddy_api.domain.ai.service.AiService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +28,7 @@ public class AiController {
             summary = "이미지 기반 자동 글쓰기",
             description = "업로드된 이미지들을 분석하여 상품 제목과 설명을 자동으로 생성합니다."
     )
-    public ResponseEntity<RspTemplate<AutoWriteDto.Response>> autoWrite(
+    public ResponseEntity<RspTemplate<AutoWriteDto.AutoWriteResponse>> autoWrite(
             @RequestParam("images") List<MultipartFile> images) {
 
         if (images == null || images.isEmpty()) {
@@ -35,7 +36,7 @@ public class AiController {
                     .body(new RspTemplate<>(HttpStatus.BAD_REQUEST, "이미지가 필요합니다."));
         }
 
-        AutoWriteDto.Response response = aiService.generateAutoContent(images);
+        AutoWriteDto.AutoWriteResponse response = aiService.generateAutoContent(images);
 
         if (response == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -52,9 +53,9 @@ public class AiController {
             summary = "스마트 가격 책정",
             description = "상품 정보와 원하는 판매 기간을 기반으로 최적의 경매 가격을 책정합니다."
     )
-    public ResponseEntity<RspTemplate<AutoWriteDto.PriceResponse>> smartPricing(
+    public ResponseEntity<RspTemplate<SmartPricingDto.PriceResponse>> smartPricing(
             @RequestPart("images") List<MultipartFile> images,
-            @RequestPart("request") AutoWriteDto.SmartPricingRequest request) {
+            @RequestPart("request") SmartPricingDto.SmartPricingRequest request) {
 
         if (images == null || images.isEmpty()) {
             return ResponseEntity.badRequest()
@@ -66,7 +67,7 @@ public class AiController {
                     .body(new RspTemplate<>(HttpStatus.BAD_REQUEST, "경매 타입을 선택해주세요."));
         }
 
-        AutoWriteDto.PriceResponse response = aiService.generateSmartPricing(
+        SmartPricingDto.PriceResponse response = aiService.generateSmartPricing(
                 images,
                 request.getTitle(),
                 request.getDescription(),

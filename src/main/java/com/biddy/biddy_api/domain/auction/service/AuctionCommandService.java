@@ -3,9 +3,7 @@ package com.biddy.biddy_api.domain.auction.service;
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.domain.auction.entity.AuctionImage;
-import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
 import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
-import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.biddy.biddy_api.domain.auction.repository.AuctionImageRepository;
 import com.biddy.biddy_api.domain.auction.repository.AuctionRepository;
 import com.biddy.biddy_api.domain.user.entity.User;
@@ -14,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
