@@ -2,8 +2,10 @@ package com.biddy.biddy_api.domain.user.service;
 
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.domain.auction.entity.Bid;
+import com.biddy.biddy_api.domain.auction.entity.Bookmark;
 import com.biddy.biddy_api.domain.auction.repository.BidRepository;
 import com.biddy.biddy_api.domain.auction.repository.BookmarkRepository;
+import com.biddy.biddy_api.domain.user.dto.MyBookmarkDto;
 import com.biddy.biddy_api.domain.user.dto.MyPageProfileDto;
 import com.biddy.biddy_api.domain.user.dto.MyParticipatedAuctionDto;
 import com.biddy.biddy_api.domain.user.entity.User;
@@ -28,6 +30,7 @@ public class UserQueryService {
 
     private final UserRepository userRepository;
     private final BidRepository bidRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     public MyPageProfileDto.MyPageProfileResponse getMyProfile(Long userId) {
         User user = userRepository.findById(userId)
@@ -78,6 +81,26 @@ public class UserQueryService {
                             .status(status)
                             .endTime(auction.getEndTime())
                             .isWinning(latestBid.getIsWinning())
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<MyBookmarkDto.MyBookmarkResponse> getMyBookmarks(Long userId) {
+
+        List<Bookmark> bookmarks = bookmarkRepository.findByUserId(userId);
+
+        return bookmarks.stream()
+                .map(bookmark -> {
+                    Auction auction = bookmark.getAuction();
+                    return MyBookmarkDto.MyBookmarkResponse.builder()
+                            .auctionId(auction.getId())
+                            .title(auction.getTitle())
+                            .thumbnailImage(getThumbnailImage(auction))
+                            .currentPrice(auction.getCurrentPrice())
+                            .endTime(auction.getEndTime())
+                            .status(auction.getStatus().getDescription())
+                            .bidCount(auction.getBids() != null ? auction.getBids().size() : 0)
                             .build();
                 })
                 .collect(Collectors.toList());
