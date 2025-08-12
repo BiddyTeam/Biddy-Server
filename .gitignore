@@ -37,6 +37,7 @@ out/
 ### VS Code ###
 .vscode/
 src/main/resources/application-dev.properties
+src/main/resources/gcp-service-account-key.json
 .env
 .vscode/
 .DS_Store
