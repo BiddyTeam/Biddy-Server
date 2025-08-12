@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.domain.ai.controller;
 
 import com.biddy.biddy_api.domain.ai.dto.AutoWriteDto;
+import com.biddy.biddy_api.domain.ai.dto.SmartPricingDto;
 import com.biddy.biddy_api.domain.ai.service.AiService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,9 +53,9 @@ public class AiController {
             summary = "스마트 가격 책정",
             description = "상품 정보와 원하는 판매 기간을 기반으로 최적의 경매 가격을 책정합니다."
     )
-    public ResponseEntity<RspTemplate<AutoWriteDto.PriceResponse>> smartPricing(
+    public ResponseEntity<RspTemplate<SmartPricingDto.PriceResponse>> smartPricing(
             @RequestPart("images") List<MultipartFile> images,
-            @RequestPart("request") AutoWriteDto.SmartPricingRequest request) {
+            @RequestPart("request") SmartPricingDto.SmartPricingRequest request) {
 
         if (images == null || images.isEmpty()) {
             return ResponseEntity.badRequest()
@@ -66,7 +67,7 @@ public class AiController {
                     .body(new RspTemplate<>(HttpStatus.BAD_REQUEST, "경매 타입을 선택해주세요."));
         }
 
-        AutoWriteDto.PriceResponse response = aiService.generateSmartPricing(
+        SmartPricingDto.PriceResponse response = aiService.generateSmartPricing(
                 images,
                 request.getTitle(),
                 request.getDescription(),

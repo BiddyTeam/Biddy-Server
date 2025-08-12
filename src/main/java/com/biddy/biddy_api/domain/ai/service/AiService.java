@@ -1,6 +1,7 @@
 package com.biddy.biddy_api.domain.ai.service;
 
 import com.biddy.biddy_api.domain.ai.dto.AutoWriteDto;
+import com.biddy.biddy_api.domain.ai.dto.SmartPricingDto;
 import com.biddy.biddy_api.domain.auction.enums.AuctionType;
 import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -57,7 +58,7 @@ public class AiService {
      * 조건별 가격 책정 기능
      * 상품 상태와 선택한 경매 타입에 맞춘 가격 설정
      */
-    public AutoWriteDto.PriceResponse generateSmartPricing(
+    public SmartPricingDto.PriceResponse generateSmartPricing(
             List<MultipartFile> images,
             String productTitle,
             String description,
@@ -229,7 +230,7 @@ public class AiService {
         }
     }
 
-    private AutoWriteDto.PriceResponse parseSmartPricingResponse(String aiResponse) {
+    private SmartPricingDto.PriceResponse parseSmartPricingResponse(String aiResponse) {
         try {
             String jsonPart = extractJsonFromResponse(aiResponse);
             if (jsonPart == null) {
@@ -248,7 +249,7 @@ public class AiService {
             }
 
             // 선택된 경매 정보 파싱
-            AutoWriteDto.SelectedAuction selectedAuction = AutoWriteDto.SelectedAuction.builder()
+            SmartPricingDto.SelectedAuction selectedAuction = SmartPricingDto.SelectedAuction.builder()
                     .type(selectedAuctionNode.path("type").asText(""))
                     .duration(selectedAuctionNode.path("duration").asText(""))
                     .startPrice(selectedAuctionNode.path("startPrice").asInt(0))
@@ -258,7 +259,7 @@ public class AiService {
                     .build();
 
             // 분석 정보 파싱
-            AutoWriteDto.Analysis analysis = AutoWriteDto.Analysis.builder()
+            SmartPricingDto.Analysis analysis = SmartPricingDto.Analysis.builder()
                     .sellProbability(analysisNode.path("sellProbability").asText(""))
                     .reasoning(analysisNode.path("reasoning").asText(""))
                     .tips(analysisNode.path("tips").asText(""))
@@ -268,7 +269,7 @@ public class AiService {
             log.info("AI 스마트 가격 책정 완료 - 타입: {}, 시작가: {}원, 즉시구매: {}원",
                     selectedAuction.getType(), selectedAuction.getStartPrice(), selectedAuction.getBuyNowPrice());
 
-            return AutoWriteDto.PriceResponse.builder()
+            return SmartPricingDto.PriceResponse.builder()
                     .marketPrice(marketPrice)
                     .selectedAuction(selectedAuction)
                     .analysis(analysis)
