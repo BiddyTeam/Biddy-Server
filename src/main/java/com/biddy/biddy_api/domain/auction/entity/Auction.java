@@ -30,10 +30,6 @@ public class Auction extends BaseEntity {
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-
     @Column(nullable = false)
     private String title;
 
@@ -59,6 +55,10 @@ public class Auction extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDateTime endTime;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

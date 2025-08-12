@@ -42,6 +42,6 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> images;
 
-    @OneToMany(mappedBy = "product")
-    private List<Auction> auctions;
+    @OneToOne(mappedBy = "product")
+    private Auction auction;
 }
