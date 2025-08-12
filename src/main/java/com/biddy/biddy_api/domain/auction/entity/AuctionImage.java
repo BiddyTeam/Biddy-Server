@@ -25,4 +25,11 @@ public class AuctionImage extends BaseEntity {
 
     @Column(nullable = false)
     private String imageUrl;
+
+    public static AuctionImage create(Auction auction, String imageUrl) {
+        return AuctionImage.builder()
+                .auction(auction)
+                .imageUrl(imageUrl)
+                .build();
+    }
 }

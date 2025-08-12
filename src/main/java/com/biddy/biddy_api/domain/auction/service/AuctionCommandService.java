@@ -49,32 +49,13 @@ public class AuctionCommandService {
         }
 
         // 경매 생성 (상품 정보 통합)
-        Auction auction = Auction.builder()
-                .seller(seller)
-                .title(request.getTitle())
-                .description(request.getDescription())
-                .startPrice(request.getStartPrice())
-                .buyNowPrice(request.getBuyNowPrice())
-                .currentPrice(request.getStartPrice())
-                .bidIncrement(request.getBidIncrement() != null ? request.getBidIncrement() : new BigDecimal("1000"))
-                .startTime(request.getStartTime())
-                .endTime(request.getEndTime())
-                .status(request.getStartTime().isAfter(LocalDateTime.now()) ?
-                        AuctionStatus.SCHEDULED : AuctionStatus.ACTIVE)
-                .category(category)
-                .condition(request.getCondition() != null ?
-                        ProductCondition.valueOf(request.getCondition().toUpperCase()) : null)
-                .build();
-
+        Auction auction = Auction.create(seller, request, category);
         Auction savedAuction = auctionRepository.save(auction);
 
         // 이미지 저장
         if (request.getImageUrls() != null && !request.getImageUrls().isEmpty()) {
             List<AuctionImage> images = request.getImageUrls().stream()
-                    .map(url -> AuctionImage.builder()
-                            .auction(savedAuction)
-                            .imageUrl(url)
-                            .build())
+                    .map(url -> AuctionImage.create(savedAuction, url))
                     .toList();
             auctionImageRepository.saveAll(images);
         }

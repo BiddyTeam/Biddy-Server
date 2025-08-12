@@ -16,10 +16,7 @@ public class AuctionCreateDto {
     @Data
     @Builder
     @Schema(name = "AuctionCreateRequest", description = "경매 등록 요청")
-    public static class AuctionCreateRequest {
-        @NotNull(message = "상품 ID는 필수입니다")
-        private Long productId;
-
+    public class AuctionCreateRequest {
         @NotBlank(message = "제목은 필수입니다")
         private String title;
 
