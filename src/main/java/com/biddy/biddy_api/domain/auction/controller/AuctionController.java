@@ -3,6 +3,7 @@ package com.biddy.biddy_api.domain.auction.controller;
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.dto.AuctionListDto;
 import com.biddy.biddy_api.domain.auction.service.AuctionCommandService;
+import com.biddy.biddy_api.domain.auction.service.AuctionQueryService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
