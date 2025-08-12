@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.user.controller;
 
+import com.biddy.biddy_api.domain.user.dto.MyPageProfileDto;
 import com.biddy.biddy_api.domain.user.service.UserQueryService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,9 +24,9 @@ public class UserController {
     @GetMapping("/profile")
     @Operation(summary = "마이페이지 프로필 조회",
             description = "사용자 기본 정보, 비디코인 잔액, 수익/지출 정보를 조회합니다.")
-    public RspTemplate<MyPageProfileDto> getMyProfile() {
+    public RspTemplate<MyPageProfileDto.MyPageProfileResponse> getMyProfile() {
         Long userId = 1L;
-        MyPageProfileDto profile = userQueryService.getMyProfile(userId);
+        MyPageProfileDto.MyPageProfileResponse profile = userQueryService.getMyProfile(userId);
         return new RspTemplate<>(HttpStatus.OK, "프로필 정보를 조회했습니다.", profile);
     }
 }

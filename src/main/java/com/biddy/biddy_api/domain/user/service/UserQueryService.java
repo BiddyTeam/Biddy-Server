@@ -4,6 +4,7 @@ import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.domain.auction.entity.Bid;
 import com.biddy.biddy_api.domain.auction.repository.BidRepository;
 import com.biddy.biddy_api.domain.auction.repository.BookmarkRepository;
+import com.biddy.biddy_api.domain.user.dto.MyPageProfileDto;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class UserQueryService {
     private final UserRepository userRepository;
     private final BidRepository bidRepository;
 
-    public MyPageProfileDto getMyProfile(Long userId) {
+    public MyPageProfileDto.MyPageProfileResponse getMyProfile(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
@@ -34,7 +35,7 @@ public class UserQueryService {
         BigDecimal totalEarnings = calculateTotalEarnings(user);
         BigDecimal totalSpent = calculateTotalSpent(userId);
 
-        return MyPageProfileDto.builder()
+        return MyPageProfileDto.MyPageProfileResponse.builder()
                 .userId(user.getId())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
