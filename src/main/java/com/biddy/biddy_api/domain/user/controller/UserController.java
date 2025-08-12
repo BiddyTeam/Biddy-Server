@@ -41,4 +41,13 @@ public class UserController {
         List<MyParticipatedAuctionDto.MyParticipatedAuctionResponse> auctions = userQueryService.getMyParticipatedAuctions(userId);
         return new RspTemplate<>(HttpStatus.OK, "참여한 경매 목록을 조회했습니다.", auctions);
     }
+
+    @GetMapping("/bookmarks")
+    @Operation(summary = "관심목록 조회",
+            description = "내가 북마크한 경매들의 목록을 조회합니다.")
+    public RspTemplate<List<MyBookmarkDto.MyBookmarkResponse>> getMyBookmarks() {
+        Long userId = 1L;
+        List<MyBookmarkDto.MyBookmarkResponse> bookmarks = userQueryService.getMyBookmarks(userId);
+        return new RspTemplate<>(HttpStatus.OK, "관심목록을 조회했습니다.", bookmarks);
+    }
 }

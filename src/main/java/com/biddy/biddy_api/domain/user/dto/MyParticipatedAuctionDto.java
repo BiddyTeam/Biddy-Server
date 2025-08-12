@@ -10,7 +10,7 @@ public class MyParticipatedAuctionDto {
 
     @Data
     @Builder
-    public class MyParticipatedAuctionResponse {
+    public static class MyParticipatedAuctionResponse {
         private Long auctionId;
         private String title;
         private String thumbnailImage;
