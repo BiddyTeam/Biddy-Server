@@ -23,7 +23,7 @@ public class RspTemplate<T> {
         this.message = message;
     }
 
-    public static RspTemplate error(int customCode, String message){
+    public static RspTemplate error(int customCode, String message) {
         return new RspTemplate<>(customCode, message);
     }
 }
