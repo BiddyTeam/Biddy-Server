@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class PostBidRequest {
-    Long auctionId;
     Long bidderId;
     Long amount;
     BidStatus status;
