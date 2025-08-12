@@ -28,4 +28,9 @@ public class AuctionQueryService {
         List<Auction> auctions = auctionRepository.findAll();
         return auctionConverter.toListDtos(auctions);
     }
+
+    public List<AuctionListDto> searchAuctions(String keyword) {
+        List<Auction> auctions = auctionRepository.findByTitleContainingIgnoreCase(keyword);
+        return auctionConverter.toListDtos(auctions);
+    }
 }
