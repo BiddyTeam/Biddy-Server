@@ -1,6 +1,6 @@
 package com.biddy.biddy_api.domain.auction.service;
 
-import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
+import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.entity.Auction;
 import com.biddy.biddy_api.domain.auction.entity.AuctionImage;
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
@@ -27,7 +27,7 @@ public class AuctionCommandService {
     private final UserRepository userRepository;
     private final AuctionImageRepository auctionImageRepository;
 
-    public Long createAuction(AuctionDto.AuctionCreateRequest request, Long userId) {
+    public Long createAuction(AuctionCreateDto.AuctionCreateRequest request, Long userId) {
         User seller = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 

@@ -1,6 +1,6 @@
 package com.biddy.biddy_api.domain.auction.controller;
 
-import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
+import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.service.AuctionCommandService;
 import com.biddy.biddy_api.global.RspTemplate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,8 +23,7 @@ public class AuctionController {
 
     @PostMapping
     @Operation(summary = "경매 게시글 등록", description = "새로운 경매 게시글을 등록합니다.")
-    public RspTemplate<Long> createAuction(@RequestBody @Valid AuctionDto.AuctionCreateRequest request) {
-
+    public RspTemplate<Long> createAuction(@RequestBody @Valid AuctionCreateDto.AuctionCreateRequest request) {
         Long auctionId = auctionCommandService.createAuction(request, 1L);
         return new RspTemplate<>(HttpStatus.CREATED, "경매가 등록되었습니다.", auctionId);
     }
