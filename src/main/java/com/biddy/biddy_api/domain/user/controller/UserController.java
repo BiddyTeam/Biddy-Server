@@ -1,5 +1,6 @@
 package com.biddy.biddy_api.domain.user.controller;
 
+import com.biddy.biddy_api.domain.user.dto.MyBookmarkDto;
 import com.biddy.biddy_api.domain.user.dto.MyPageProfileDto;
 import com.biddy.biddy_api.domain.user.dto.MyParticipatedAuctionDto;
 import com.biddy.biddy_api.domain.user.service.UserQueryService;
