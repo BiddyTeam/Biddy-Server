@@ -2,6 +2,7 @@ package com.biddy.biddy_api.domain.auction.controller;
 
 import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
 import com.biddy.biddy_api.domain.auction.dto.AuctionDto;
+import com.biddy.biddy_api.domain.auction.dto.AuctionListDto;
 import com.biddy.biddy_api.domain.auction.service.AuctionCommandService;
 import com.biddy.biddy_api.domain.auction.service.AuctionQueryService;
 import com.biddy.biddy_api.global.RspTemplate;
@@ -11,6 +12,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auctions")
@@ -28,7 +31,7 @@ public class AuctionController {
         return new RspTemplate<>(HttpStatus.CREATED, "경매가 등록되었습니다.", auctionId);
     }
 
-    @GetMapping("/{memberId}/{auctionId}")
+    @GetMapping("member/{memberId}/auction/{auctionId}")
     @Operation(summary = "경매 상세 조회", description = "경매 상세 정보를 조회합니다.")
     public RspTemplate<AuctionDto> getAuction(
             @PathVariable Long memberId,
@@ -36,5 +39,12 @@ public class AuctionController {
     ) {
         AuctionDto auction = auctionQueryService.getAuction(memberId, auctionId);
         return new RspTemplate<>(HttpStatus.FOUND, "경매 상세 정보 조회", auction);
+    }
+  
+    @GetMapping
+    @Operation(summary = "경매 목록 조회", description = "모든 경매 목록을 조회합니다.")
+    public RspTemplate<List<AuctionListDto>> getAllAuctions() {
+        List<AuctionListDto> auctions = auctionQueryService.getAllAuctions();
+        return new RspTemplate<>(HttpStatus.OK, "경매 목록을 조회했습니다.", auctions);
     }
 }

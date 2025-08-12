@@ -28,8 +28,8 @@ public class BidService {
     private final AuctionRepository auctionRepository;
     private final UserRepository userRepository;
 
-    public Long postBidInAuction(PostBidRequest request) throws RuntimeException {
-        Auction auction = auctionRepository.getAuctionById(request.getAuctionId()).orElseThrow();
+    public Long postBidInAuction(Long actionId, PostBidRequest request) throws RuntimeException {
+        Auction auction = auctionRepository.getAuctionById(actionId).orElseThrow();
         long requestPriceLong = request.getAmount();
         BigDecimal requestPrice = BigDecimal.valueOf(requestPriceLong);
         BigDecimal currentPrice = auction.getCurrentPrice();

@@ -18,28 +18,29 @@ public class BidController {
 
     private final BidService bidService;
 
-    @PostMapping()
+    @PostMapping("/auctions/{auctionId}/bids")
     @Operation(method = "Post", description = "입찰이 등록 되었습니다.")
     public RspTemplate<Long> postBid(
+            @PathVariable Long auctionId,
             @RequestBody PostBidRequest request
     ) {
-        Long id = bidService.postBidInAuction(request);
+        Long id = bidService.postBidInAuction(auctionId, request);
         return new RspTemplate<>(HttpStatus.CREATED, "입찰이 등록 되었습니다.", id);
     }
 
-    @GetMapping("/auction")
+    @GetMapping("/auctions/{auctionId}/bids")
     @Operation(method = "Get", description = "각 경매에 해당되는 입찰 이력을 조회합니다.")
     public RspTemplate<List<BidDto>> getBidListInAuction(
-            @RequestParam Long auctionId
+            @PathVariable Long auctionId
     ) {
         List<BidDto> list = bidService.getBidListInAuction(auctionId);
         return new RspTemplate<>(HttpStatus.FOUND, "경매에 해당되는 입찰 이력을 조회합니다.", list);
     }
 
-    @GetMapping("/auction/bids")
+    @GetMapping("/users/{userId}/bids")
     @Operation(method = "Get", description = "사용자가 입찰했던 이력을 조회합니다.")
     public RspTemplate<List<BidDto>> getBidHistory(
-            @RequestParam Long userId
+            @PathVariable Long userId
     ) {
         List<BidDto> list = bidService.getBidHistory(userId);
         return new RspTemplate<>(HttpStatus.FOUND, "입찰 이력을 조회합니다.", list);

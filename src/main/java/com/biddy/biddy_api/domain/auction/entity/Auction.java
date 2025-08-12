@@ -75,6 +75,9 @@ public class Auction extends BaseEntity {
     @OneToMany(mappedBy = "auction")
     private List<Bookmark> bookmarks;
 
+    @OneToMany(mappedBy = "auction")
+    private List<AuctionImage> auctionImages;
+
     public static Auction create(User seller, AuctionCreateRequest request, ProductCategory category) {
         return Auction.builder()
                 .seller(seller)
