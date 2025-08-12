@@ -1,11 +1,12 @@
-package com.biddy.biddy_api.domain.product.enums;
+package com.biddy.biddy_api.domain.auction.enums;
 
 public enum ProductCondition {
     NEW("새상품"),
     LIKE_NEW("거의새것"),
     VERY_GOOD("매우좋음"),
     GOOD("좋음"),
-    ACCEPTABLE("보통");
+    ACCEPTABLE("보통"),
+    BAD("나쁨");
 
     private final String description;
 

@@ -1,7 +1,10 @@
 package com.biddy.biddy_api.domain.auction.entity;
 
+import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto;
+import com.biddy.biddy_api.domain.auction.dto.AuctionCreateDto.AuctionCreateRequest;
 import com.biddy.biddy_api.domain.auction.enums.AuctionStatus;
-import com.biddy.biddy_api.domain.product.entity.Product;
+import com.biddy.biddy_api.domain.auction.enums.ProductCategory;
+import com.biddy.biddy_api.domain.auction.enums.ProductCondition;
 import com.biddy.biddy_api.domain.user.entity.User;
 import com.biddy.biddy_api.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -29,10 +32,6 @@ public class Auction extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
 
     @Column(nullable = false)
     private String title;
@@ -64,9 +63,35 @@ public class Auction extends BaseEntity {
     @Builder.Default
     private AuctionStatus status = AuctionStatus.SCHEDULED;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductCategory category;
+
+    @Enumerated(EnumType.STRING)
+    private ProductCondition condition;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction")
     private List<Bookmark> bookmarks;
+
+    public static Auction create(User seller, AuctionCreateRequest request, ProductCategory category) {
+        return Auction.builder()
+                .seller(seller)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .startPrice(request.getStartPrice())
+                .buyNowPrice(request.getBuyNowPrice())
+                .currentPrice(request.getStartPrice())
+                .bidIncrement(request.getBidIncrement() != null ? request.getBidIncrement() : new BigDecimal("1000"))
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .status(request.getStartTime().isAfter(LocalDateTime.now()) ?
+                        AuctionStatus.SCHEDULED : AuctionStatus.ACTIVE)
+                .category(category)
+                .condition(request.getCondition() != null ?
+                        ProductCondition.valueOf(request.getCondition().toUpperCase()) : null)
+                .build();
+    }
 }
