@@ -14,7 +14,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -118,8 +120,16 @@ public class Auction extends BaseEntity {
         dto.setStartTime(this.startTime.format(formatter));
         dto.setEndTime(this.endTime.format(formatter));
         dto.setAuctionType(this.auctionType);
-
         dto.setAuctionStatus(this.status);
+
+        if (this.auctionImages != null && !this.auctionImages.isEmpty()) {
+            List<String> imageUrls = this.auctionImages.stream()
+                    .map(AuctionImage::getImageUrl)
+                    .toList();
+            dto.setProuductImageUrls(imageUrls);
+        } else {
+            dto.setProuductImageUrls(new ArrayList<>());
+        }
         dto.setProductCategory(this.category);
         dto.setProductCondition(this.condition);
 

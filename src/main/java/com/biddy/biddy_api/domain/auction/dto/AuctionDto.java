@@ -24,6 +24,7 @@ public class AuctionDto {
     public AuctionType auctionType;
     public AuctionStatus auctionStatus;
 
+    public List<String> prouductImageUrls;
     public ProductCategory productCategory;
     public ProductCondition productCondition;
 
