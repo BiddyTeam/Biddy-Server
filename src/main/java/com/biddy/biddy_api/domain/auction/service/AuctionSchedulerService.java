@@ -19,18 +19,18 @@ public class AuctionSchedulerService {
     private final AuctionRepository auctionRepository;
     private final AuctionProcessingService auctionProcessingService;
 
-    @Scheduled(fixedRate = 60000)
+//    @Scheduled(fixedRate = 60000)
     public void updateAuctionStatuses() {
-        LocalDateTime now = LocalDateTime.now();
-
-        int startedCount = auctionRepository.activateScheduledAuctions(now);
-        List<Long> idsToProcess = auctionRepository.findIdsOfActiveAuctionsEndedBefore(now);
-
-        int endedCount = auctionRepository.endExpiredAuctions(now);
-        auctionProcessingService.processBidsForEndedAuctions(idsToProcess);
-
-        if (startedCount > 0 || endedCount > 0) {
-            log.info("경매 상태 업데이트 완료 - 시작: {}개, 종료: {}개 (후처리 대상)", startedCount, endedCount);
-        }
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        int startedCount = auctionRepository.activateScheduledAuctions(now);
+//        List<Long> idsToProcess = auctionRepository.findIdsOfActiveAuctionsEndedBefore(now);
+//
+//        int endedCount = auctionRepository.endExpiredAuctions(now);
+//        auctionProcessingService.processBidsForEndedAuctions(idsToProcess);
+//
+//        if (startedCount > 0 || endedCount > 0) {
+//            log.info("경매 상태 업데이트 완료 - 시작: {}개, 종료: {}개 (후처리 대상)", startedCount, endedCount);
+//        }
     }
 }
